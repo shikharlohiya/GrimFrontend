@@ -1,0 +1,82 @@
+/* ----------- CART START ---------- */
+.page-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.page-title h1 {
+  font-size: 20px;
+}
+.page-title button {
+  background-color: #fff;
+  color: #0097e6;
+  padding: 5px 15px;
+  border-radius: 4px;
+  border: 1px solid #0097e6;
+}
+.product-cart-wrapp .table thead tr th:last-child,
+.product-cart-wrapp .table tbody tr td:last-child {
+  background-color: #eee8e8;
+  text-align: center;
+}
+.product-cart-wrapp .table tbody tr td:last-child {
+  font-size: 20px;
+  padding: 28px 8px 8px;
+}
+.product-cart-wrapp .table tbody tr td:last-child span a {
+  cursor: pointer;
+  color: #575856;
+}
+.product-cart-wrapp .table thead tr th {
+  font-size: 12px;
+  white-space: nowrap;
+}
+.product-cart-wrapp .table tbody tr td {
+  font-size: 12px;
+  padding: 20px 8px 8px;
+}
+.product-cart-wrapp .table tbody tr td.vmiddle {
+  padding: 28px 8px 8px;
+}
+.product-cart-wrapp .table tbody tr td p {
+  text-align: end;
+  display: block;
+  margin: 0;
+}
+.cart-buttons-wrap {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ----------- CART END ---------- */
+
+.error-msg {
+  color: red;
+  font-size: small;
+}
+.deleteicon {
+  color: red;
+}
+.showmsg {
+  display: flex;
+  align-content: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.inner.show {
+  max-height: 159px;
+  overflow-y: auto;
+  min-height: 82px;
+}
+.dropdown-menu.inner.show {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 220px;
+  min-height: 220px !important;
+  max-height: 220px !important;
+}

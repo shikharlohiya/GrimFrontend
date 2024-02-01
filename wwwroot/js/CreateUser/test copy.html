@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <select id="Select_a_Role_1" class="selectpicker" multiple aria-label="Default select example" data-live-search="true">
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+      <option value="4">Four</option>
+    </select>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+  
+  <script>
+    $(document).ready(function () {
+      var test = ["3", "1", "2", "5"];
+  
+      // Initialize Bootstrap Selectpicker
+      $("#Select_a_Role_1").selectpicker();
+  
+      // Reorder options based on the 'test' array
+      $.each(test, function (index, value) {
+        var option = $('#Select_a_Role_1').find('option[value="' + value + '"]');
+        $('#Select_a_Role_1').append(option);
+      });
+  
+      // Set selected values
+      $("#Select_a_Role_1").selectpicker('val', test);
+  
+      // Refresh the Bootstrap Selectpicker to reflect the changes
+      $("#Select_a_Role_1").selectpicker('refresh');
+    });
+  </script>
+  
+</body>
+</html>

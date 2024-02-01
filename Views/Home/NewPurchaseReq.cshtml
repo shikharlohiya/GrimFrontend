@@ -1,0 +1,109 @@
+﻿<style>
+.error {
+  border: 1px solid red;
+}
+
+</style>
+<section id="content-wrapper">
+    <div class="header-inner-title">
+        <div class="page-title">
+            <h1>New Purchase Request</h1>
+        </div>
+        <div>
+            <a href="/Home/MyRequests#moyen"><button class="common-button common-blue-button">Request</button></a>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div>
+            <form>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="MaterialName">Material Name<span>*</span></label>
+                            <input type="text" class="form-control"
+                                id="MaterialName">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="Materialgroup">Material group<span>*</span></label>
+                            <select class="form-control" id="Materialgroup"
+                                name="Acct Assignment Cart">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="UnitOfMeasure">Unit Of Measure <span>*</span></label>
+                            <select class="form-control" id="UnitOfMeasure"
+                                name="sellist1">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class=" col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="SelectLocation">Select
+                                Location</label>
+                            <select class="form-control"
+                                id="SelectLocation"
+                                name="sellist1">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="MaterialDescription">Material
+                                Description</label>
+                            <textarea class="form-control" rows="1"
+                                id="MaterialDescription"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="Movingprice">Moving price<span>*</span></label>
+                            <input type="number" class="form-control"
+                                id="Movingprice">
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <div class="switch-btn-wrap">
+                                <label class="switch">
+                                    <input type="checkbox" id="checkbox_b">
+                                    <span class="slider round"></span>
+                                </label>
+                                <span for class="switch-text">Batch
+                                    Management</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="vendors-buttons-wrap">
+                    <button type="reset"
+                        class="common-button common-orange-button">RESET</button>
+                    <button type="submit"
+                        class="common-button common-blue-button">SAVE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    window.ApiUrl1 = '@Model.ApiUrl1';
+    window.ApiUrl2 = '@Model.ApiUrl2';
+    window.BaseUrl = '@Model.BaseUrl';
+    window.Port1 = '@Model.Port1';
+    window.Port2 = '@Model.Port2';
+    window.Endpoint1 = '@Model.Endpoint1';
+    window.Endpoint2 = '@Model.Endpoint2';
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script src="~/js/main.js"></script>
+<script src="~/js/NewPurchaseReq/NewPurchaseReq.js"></script>

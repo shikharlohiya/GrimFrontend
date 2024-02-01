@@ -1,0 +1,128 @@
+@* for table *@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+
+<!-- Bootstrap cdn for filter -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css">
+        <!-- Bootstrap cdn for filter -->
+
+<!---------------------------- offcanvas starts hear ---------------------------->
+
+<div class="offcanvas offcanvas-end off-filter-box" tabindex="-1" id="offcanvasRight"
+  aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h3 id="offcanvasRightLabel">Filters</h3>
+    <button type="button" id="Closebtn" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+      aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="filter-form">
+          <div class="mb-3">
+            <div class="inline field">
+              <label for="Indent_Status" class="form-label">Indent Status</label>
+              <select name="skills" multiple="" id="Indent_Status" class="label ui fluid selection dropdown">
+               
+              </select>
+            </div>
+          </div>
+          <div class="filters-footer d-flex align-items-center">
+            <button type="button" class="btn btn-primary fsubmit text-uppercase fw-bold me-3">Apply</button>
+            <button type="button" class="btn btn-danger fclear text-uppercase fw-bold">Reset</button>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---------------------------- offcanvas starts end hear ---------------------------->
+
+<section id="content-wrapper">
+    <div class="page-title">
+        <h1>Returns</h1>
+        <div class="col-md-1">
+            <div class="filter-btn-wrap">
+              <button type="submit"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><span class="material-symbols-rounded">filter_alt</span></button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div>
+            <div class="row" >
+                <table id="Returnsdata">
+                    <thead id="table-head">
+                        @* <th></th>
+                        <th>S NO</th>
+                        <th>Name</th>
+                        <th>Material Name</th>
+                        <th>plant Id</th>
+                        <th>indent Id</th>
+                        <th>quantity</th>
+                        <th>reason</th>
+                        <th>price</th>
+                        <th>Movement</th>
+                        <th>STO</th>
+                        <th>Document No</th>
+                        <th>Document Year</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                        <th id="sticky-column">Created At</th> *@
+                    </thead>
+                </table>
+            </div>
+            <div id="inputSection" style="display: none">
+                <label for="remark">Remark:</label>
+                <input type="text" class="form-control" id="remark_return" /><br>
+                <select id="dropdown_return" class="form-control">
+                   @* set data from api *@
+                </select><br>
+                <button id="secondButton" class="btn btn-primary common-button common-flex-icon-btn common-blue-button" disabled>Return Complete</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    window.ApiUrl1 = '@Model.ApiUrl1';
+    window.ApiUrl2 = '@Model.ApiUrl2';
+    window.BaseUrl = '@Model.BaseUrl';
+    window.Port1 = '@Model.Port1';
+    window.Port2 = '@Model.Port2';
+    window.Endpoint1 = '@Model.Endpoint1';
+    window.Endpoint2 = '@Model.Endpoint2';
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@* for table *@
+<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
+
+
+ @*new cdm for filter*@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
+@*new cdm for filter end*@
+
+
+@* fixedColumns *@
+<script
+    src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+
+<script src="~/js/main.js"></script>
+<script src="~/js/Returnsdata/Returnsdata.js"></script>

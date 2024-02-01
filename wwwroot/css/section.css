@@ -1,0 +1,19 @@
+.cardimgbody {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.notfoundimg {
+  width: fit-content;
+}
+
+.stockcount {
+  border: none;
+  background: none;
+  outline: none;
+}
+.error {
+  color: red;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bootstrap Multiple Select Dropdown</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome CSS (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <style>
+        .dropdown-menu {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .dropdown-menu .form-check {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h2>Bootstrap Multiple Select Dropdown</h2>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Options
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <input type="text" class="form-control mb-2" id="searchInput" placeholder="Search">
+                <div id="checkboxTree">
+                    <!-- Checkbox tree structure will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom jQuery code -->
+    <script>
+        // Sample hierarchical data
+        var data = [
+            {
+                id: 1, text: "Option 1", children: [
+                    { id: 2, text: "Suboption 1.1" },
+                    { id: 3, text: "Suboption 1.2" }
+                ]
+            },
+            { id: 4, text: "Option 2" },
+            {
+                id: 5, text: "Option 3", children: [
+                    { id: 6, text: "Suboption 3.1" },
+                    {
+                        id: 7, text: "Suboption 3.2", children: [
+                            { id: 8, text: "Subsuboption 3.2.1" },
+                            { id: 9, text: "Subsuboption 3.2.2" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        function generateCheckboxTree(items, parentId) {
+            var result = '';
+
+            items.forEach(function (item) {
+                if (!item.children) {
+                    // Leaf node (no children)
+                    result += '<div class="form-check">';
+                    result += '<input class="form-check-input" type="checkbox" value="' + item.id + '" id="checkbox' + item.id + '">';
+                    result += '<label class="form-check-label" for="checkbox' + item.id + '">' + item.text + '</label>';
+                    result += '</div>';
+                } else {
+                    // Node with children
+                    result += '<div class="form-check">';
+                    result += '<input class="form-check-input" type="checkbox" value="' + item.id + '" id="checkbox' + item.id + '">';
+                    result += '<label class="form-check-label" for="checkbox' + item.id + '">' + item.text + '</label>';
+                    result += '<div class="form-check">';
+                    result += generateCheckboxTree(item.children, item.id);
+                    result += '</div>';
+                    result += '</div>';
+                }
+            });
+
+            return result;
+        }
+
+        // Initialize the checkbox tree
+        $('#checkboxTree').html(generateCheckboxTree(data));
+
+        // Handle search input
+        $('#searchInput').on('input', function () {
+            var searchTerm = $(this).val().toLowerCase();
+
+            $('.form-check-label').filter(function () {
+                $(this).parent().toggle($(this).text().toLowerCase().indexOf(searchTerm) > -1);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,224 @@
+<link
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+<link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+
+
+<style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .NewBtn{    
+        color: #fff;
+        border-radius: 5px;
+        padding: 4px 8px;
+        font-size: small;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      select,
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+      }
+      .btn {
+        padding: 7px 14px;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      .btn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      .step {
+        display: none;
+      }
+      .step.active {
+        display: block;
+      }
+
+</style>
+
+    <div
+      class="modal fade"
+      id="workflowModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="workflowModalLabel"
+      aria-hidden="true"
+      data-bs-keyboard="false"
+      data-backdrop="static"
+    >
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <!-- step 1 -->
+
+          <div id="step1" class="step active">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="workflowModalLabel">
+                Workflow Details
+              </h5>
+            </div>
+            <div class="modal-body">
+              @* <p class="fw-bold">Edit Workflow Details</p> *@
+              <br />
+              <br />
+              <form id="workflow-form">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="name">Name*:</label>
+                    <input type="text" id="name" class="form-control" required />
+                  </div>
+                  <div class="col-md-4">
+                    <label for="request-type">Request Type*:</label>
+                    <select id="request-type" class="form-control" required>
+                    
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="status">Status*:</label>
+                    <select id="status" class="form-control" required>
+                      <option value="99999">Select</option>
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="description">Description:</label>
+                    <textarea id="description" class="form-control" required></textarea>
+                  </div>
+                  <div>
+                    <small class="form-text text-muted"
+                      >*indicates required field</small
+                    >
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="continue-btn"
+                disabled
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+
+          <!-- step 2 -->
+
+          <div class="step" id="step2">
+             <div class="modal-header">
+              <h5 class="modal-title" id="workflowModalLabel">
+                Add Workflow Steps
+              </h5>
+            </div>
+              <div class="modal-body">
+            <table
+           
+              class="table table-striped"
+              style="width: 100%"
+            >
+              <thead>
+                <tr>
+                  <th>S No</th>
+                  <th>Role</th>
+                  <th id="middele_td">Amount</th>
+                  <th>TAT (Hrs)</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="Add_Workflow">
+              
+              </tbody>
+            </table>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+              Cancel
+            </button>
+            <button class="btn btn-secondary" id="prev-step-2">Previous</button>
+            <button class="btn btn-primary" onclick="save_data()" id="">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<section id="content-wrapper">
+    <h3>Workflows</h3>
+    <nav style="
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-content: center;
+    align-items: center;
+    margin: 17px;
+">
+ <button
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#workflowModal"
+      onclick="clear_data()"
+    >
+      + Add
+    </button>
+@* <button class="lable_button lightblue" onclick="addrole()" style="
+    font-size: larger;
+">+Add</button> *@
+</nav>
+    <table id="Userlist" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>S No</th>
+                <th>Name</th>
+                <th>Server Request</th>
+                <th>Department</th>
+                <th>Created At</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</section>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+@*new cdn*@
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script
+    src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<script
+    src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+
+<script src="~/js/main.js"></script>
+<script src="~/js/workflow/workflow.js"></script>
+
+@* 20/09/23 *@
+
+   
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    
+  

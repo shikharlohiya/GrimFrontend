@@ -1,0 +1,62 @@
+<link
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+<link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+<style>
+
+.NewBtn{    
+    color: #fff;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: small;
+}
+</style>
+<section id="content-wrapper">
+    @*<h1>returns page</h1>*@
+    <nav>nav bar</nav>
+    <table id="Userlist" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>S No</th>
+                <th>Controlling Area</th>
+                <th>Cost center</th>
+                <th>plant </th>
+                <th>Valid To</th>
+                <th>Description</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</section>
+
+<script>
+    window.ApiUrl1 = '@Model.ApiUrl1';
+    window.ApiUrl2 = '@Model.ApiUrl2';
+    window.BaseUrl = '@Model.BaseUrl';
+    window.Port1 = '@Model.Port1';
+    window.Port2 = '@Model.Port2';
+    window.Endpoint1 = '@Model.Endpoint1';
+    window.Endpoint2 = '@Model.Endpoint2';
+</script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+@*new cdn*@
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script
+    src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<script
+    src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+
+<script src="~/js/main.js"></script>
+<script src="~/js/cost_centers/cost_centers.js"></script>

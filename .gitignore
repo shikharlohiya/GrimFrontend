@@ -1,0 +1,13 @@
+/bin
+/obj
+/.vs
+obj/Release/net7.0/GrimLogin.GeneratedMSBuildEditorConfig.editorconfig
+obj/Release/net7.0/GrimLogin.csproj.AssemblyReference.cache
+obj/Release/net7.0/GrimLogin.assets.cache
+obj/project.nuget.cache
+obj/project.assets.json
+obj/GrimLogin.csproj.nuget.g.props
+obj/GrimLogin.csproj.nuget.dgspec.json
+.vs/GrimLogin/v17/.suo
+.vs/GrimLogin/v17/.futdcache.v2
+.vs/GrimLogin/config/applicationhost.config

@@ -1,0 +1,78 @@
+<ul class="navbar-nav">
+    @{
+        void RenderSubMenu(IEnumerable<MenuTable> subMenuItems, bool submenu = true)
+        {
+            if (submenu)
+            {
+                <ul class="dropdown-menu">
+                    @foreach (var sub in subMenuItems)
+                    {
+                        @if (SubmenuTable.Any(sm => sm.parentMenuCode == sub.MenuCode))
+                        {
+                            <li>
+                                <a class="dropdown-item"> @sub.MenuName &raquo; </a>
+                                <ul class="submenu dropdown-menu">
+                                    @if (SubmenuTable.Any(sm => sm.parentMenuCode == sub.MenuCode))
+                                    {
+                                        RenderSubMenu(menuTable.Where(sm => sm.ParentMenuCode == sub.MenuCode), false);
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a class="dropdown-item"> @sub.MenuName </a>
+                            </li>   
+                        }
+                    }
+                </ul>
+            }
+            else
+            {
+                @foreach (var sub in subMenuItems)
+                {
+                    @if (SubmenuTable.Any(sm => sm.parentMenuCode == sub.MenuCode))
+                    {
+                        <li>
+                            <a class="dropdown-item" href="#">@sub.MenuName &raquo;</a>
+                            <ul class="submenu dropdown-menu">
+                                @if (SubmenuTable.Any(sm => sm.parentMenuCode == sub.MenuCode))
+                                {
+                                    RenderSubMenu(menuTable.Where(sm => sm.ParentMenuCode == sub.MenuCode), false);
+                                }
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a class="dropdown-item"> @sub.MenuName </a></li>
+                    }
+                }
+            }
+        }
+        
+        foreach (var main in Fetch_Menu[0])
+        {
+            if (SubmenuTable.Any(sm => sm.parentMenuCode == main.MenuCode))
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" id="@main.ParentMenuCode" href="#" data-bs-toggle="dropdown">
+                        @main.MenuName
+                    </a>
+                    @{ var subMenuItems = menuTable.Where(sm => sm.ParentMenuCode == main.MenuCode).ToList(); }
+                    @if (subMenuItems != null && subMenuItems.Any())
+                    {
+                        RenderSubMenu(subMenuItems);
+                    }
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="@Url.Action(main.FormName, "Home")">@main.MenuName</a>
+                </li>
+            }
+        }
+    }
+</ul>

@@ -1,0 +1,593 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="~/images/logo.ad88c674.png">
+    <title>@ViewData["Title"]Grim</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/print.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GrimLogin.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true" />
+    @* cdn for momment ude *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    @* cdn for momment ude *@
+
+    @* new 21-08-23 *@
+    <!-- Bootstrap cdn for filter -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css">
+    <!-- Bootstrap cdn for filter -->
+
+    <!--Bootstrap cdn-->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400|Montserrat:700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!--Google icon cdn -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!--Local css-->
+
+    @* new 02-08-23 *@
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.css" rel="stylesheet">
+    @* toastr css*@
+    <link rel="stylesheet" type="text/css" href="~/assets/toastr/toastr.min.css">
+
+    <link rel="stylesheet" type="text/css" href="~/css/section.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/toastr/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/badge_notifiction.css">
+    <link rel="stylesheet" type="text/css" href="~/css/Cart.css">
+    <link rel="stylesheet" type="text/css" href="~/css/common.css">
+
+    <script src="~/assets/print/jquery.print.min.js"></script>
+</head>
+
+<body>
+
+    <!---------------------------- offcanvas starts hear ---------------------------->
+
+    <div class="offcanvas offcanvas-end off-filter-box" tabindex="-1" id="offcanvasRight"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h3 id="offcanvasRightLabel">Filters</h3>
+            <button type="button" id="Closebtn" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="filter-form">
+                        <div class="mb-3">
+                            <div class="inline field">
+                                <label for="Type_of_Material" class="form-label">Type of Material</label>
+                                <select name="skills" multiple="" id="Type_of_Material"
+                                    class="label ui fluid selection dropdown">
+                                    @* data set from API *@
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="inline field">
+                                <label for="Group_of_Material" class="form-label">Group of Material</label>
+                                <select name="skills" multiple="" id="Group_of_Material"
+                                    class="label ui fluid selection dropdown">
+                                    @* data set from API *@
+                                </select>
+                            </div>
+                        </div>
+                        <div class="filters-footer d-flex align-items-center">
+                            <button type="button"
+                                class="btn btn-primary fsubmit text-uppercase fw-bold me-3">Apply</button>
+                            <button type="button" class="btn btn-danger fclear text-uppercase fw-bold">Reset</button>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!---------------------------- offcanvas starts end hear ---------------------------->
+    @* sidebar menu *@
+    <div id="wrapper" class="toggled">
+        <!-- sidebar start -->
+        <aside id="sidebar-wrapper">
+            <div class="sidebar-brand">
+                <a class="nav-link">
+                    <img src="~/images/logo.ad88c674.png">
+                    <span><b>GRIM</b></span>
+                </a>
+            </div>
+
+            <ul class="sidebar-nav" id="sidebar-nav">
+                @* display all side menu name *@
+            </ul>
+
+        </aside>
+        <!-- sidebar end -->
+
+        <!-- header start -->
+        <div id="navbar-wrapper">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid nav-container-fluid ">
+                    <div class="navbar-header">
+                        <div class="header-inner">
+                            <div>
+                                <a href="#" class="navbar-brand" id="sidebar-toggle"><span
+                                        class="material-symbols-rounded">menu</span></a>
+                            </div>
+                            <div class="header-inner-icon">
+                                <div class="position" id="roleinfo"></div>
+                                <div class="position" id="notification">
+                                    <div class="notif-badge red" id="notifications_no"></div>
+                                    <span data-toggle="modal" data-target="#myModal2"
+                                        class="material-symbols-rounded">notifications</span>
+                                </div>
+                                <a href="Cart">
+                                    <div class="position" id="shopping_cart">
+                                        <div class="notif-badge green" id="notifications_cart"></div>
+                                        <a href="Cart"><span class="material-symbols-rounded">shopping_cart</span></a>
+                                    </div>
+                                </a>
+                                <div class="nav-item dropdown_nav">
+                                    <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false"><span
+                                            class="material-symbols-rounded">account_circle</span><span
+                                            id="username"></span></a>
+                                    <ul class="dropdown-menu ">
+                                        <li>
+                                            <a class="dropdown-item disabled dropdown-text" href="#"><span
+                                                    class="material-symbols-rounded">account_circle</span><span
+                                                    id="username1"></span></a>
+                                        </li>
+                                        <li><a class="dropdown-item dropdown-text" href="../Home/MyProfile">My
+                                                Profile</a></li>
+                                        <li><a class="dropdown-item dropdown-text logoutname"
+                                                onclick="logout()">Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="data-count"></div>
+        <!-- header end -->
+
+        @RenderBody()
+        <!-- Vertically centered modal -->
+        <div class="modal-dialog modal-dialog-centered">
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal
+                                title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save
+                                changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @* sidebar menu end *@
+    <!-- The Modal -->
+    <div class="modal fade timeline-modal-wrap" id="indent-timeline-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Indent Timeline</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="timeline" id="timeline">
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal right fade notification-right-bar" id="myModal2" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel2">Notifications</h4>
+                </div>
+
+                <div class="modal-body" id="noticationbody">
+
+                </div>
+
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+
+    <!-- Modal for filter -->
+    <div class="modal right fade notification-right-bar" id="myModal_filter" tabindex="-2" role="dialog"
+        aria-labelledby="myModalLabelfilter">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                @* header part *@
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabelfilter">filter</h4>
+                </div>
+                @* Body part *@
+                <div class="modal-body" id="filterbody">
+                    filter page
+                </div>
+
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+
+    <!-- Button trigger modal -->
+
+    <!---------------------------- Order placed Modal start---------------------------->
+    <div class="modal fade" id="orderPlacedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Order Placed
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" onclick="popClose('orderPlacedModal')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3 id="usernameprint">Hey Indent User</h3>
+                    <p id="orderid">Your ordetr id:56 is placed and will be
+                        delivered from NC09 Centerl Gen Stor</p>
+                </div>
+                <div class="modal-footer">
+                    <a asp-controller="Home" asp-action="NewIndent"><button type="button"
+                            class="common-button common-blue-button" data-dismiss="modal">Your Next
+                            Order</button></a>
+                    <a asp-controller="Home" asp-action="MyRequests"><button type="button"
+                            class="common-button common-green-button">Track
+                            Your Order</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!---------------------------- Order placed Modal end---------------------------->
+
+    <!-- custom Modal center model yes and no  -->
+    <div class="modal fade" id="customModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        <span class="material-symbols-rounded">warning</span>
+                        Replace Cart Material
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" onclick="popClose('customModalCenter')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Your Cart contains materials Do you want to
+                        discard the selection and add materials from
+                        Central Gen Stor?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="common-button common-red-button" data-dismiss="modal"
+                        onclick="popClose('customModalCenter')">No</button>
+                    <button type="button" class="common-button common-blue-button">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- custom Modal center model yes and no  -->
+
+
+    <!-- Button trigger modal -->
+    @* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#return_alert">
+    Launch static backdrop modal
+    </button> *@
+    <!-- Modal -->
+    @* i remove this line of code tabindex="-1" *@
+    <div class="modal fade" id="return_alert" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Return Material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table id="return_alert_table">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody>
+                            <!-- Your table body content here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <a href="#" id="scroll"><span>Scroll</span></a>
+
+    <script>
+        $(document).ready(function () {
+            var $divElement = $('body');
+            let isScrollingUp = true;
+
+            $divElement.on('scroll', function () {
+                //console.log('Scroll Height:', $divElement.get(0).scrollHeight);
+                if ($(this).scrollTop() > 100) {
+                    $('#scroll').fadeIn();
+                    $('#scroll').css('transform', 'rotate(0deg)');
+                } else {
+                    $('#scroll').fadeIn();
+                    $('#scroll').css('transform', 'rotate(180deg)');
+                }
+            });
+
+            $('#scroll').click(function () {
+                let targetScrollTop = isScrollingUp ? 0 : $divElement[0].scrollHeight;
+                $("html, body").animate({ scrollTop: targetScrollTop }, 600);
+                isScrollingUp = !isScrollingUp;
+
+                return false;
+            });
+        });
+    </script>
+
+    <!-- Jquery CDN Link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Jquery CDN Link end -->
+
+    <script src="~/assets/toastr/toastr.min.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+
+    <link rel="stylesheet" type="text/css" href="~/assets/sweetalert/11.7.12_dist_sweetalert2.min.css">
+    <script src="~/assets/sweetalert/11.7.12_dist_sweetalert2.all.min.js"></script>
+
+    <script src="~/js/main.js"></script>
+    <script src="~/js/Home/Home.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Logout.js"></script>
+
+    @* 21-8-23*@
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script> *@
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
+    @* 21-8-23 end *@
+    <!-- Jquery CDN Link -->
+    @* <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> *@
+
+
+
+    <!-- Jquery CDN Link new 03 -->
+    @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script> *@
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script> *@
+    <!-- Jquery CDN Link new 03 end -->
+    <script>
+        <!-- Jquery CDN Link new  -->
+        // Check if the screen size matches a mobile device
+        @* var isMobile = window.matchMedia("(max-width: 767px)").matches; *@
+
+            // Add class if it's a mobile device
+        @* if (isMobile) {
+            document.getElementById("sidebar-wrapper").classList.add("toggled");
+            } *@
+        const $button = document.querySelector('#sidebar-toggle');
+        const $wrapper = document.querySelector('#wrapper');
+
+        $button.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleClassAndSave();
+            //$wrapper.classList.toggle('toggled');
+        });
+
+        function toggleClassAndSave() {
+            $wrapper.classList.toggle('toggled');
+            const classStatus = $wrapper.classList.contains('toggled') ? 'toggled' : '';
+            localStorage.setItem('wrapperClass', classStatus);
+        }
+
+        function loadClassFromLocalStorage() {
+            const classStatus = localStorage.getItem('wrapperClass');
+            if (classStatus === 'toggled') {
+                $wrapper.classList.add('toggled');
+            } else {
+                $wrapper.classList.remove('toggled');
+            }
+        }
+
+        loadClassFromLocalStorage();
+    </script>
+
+    <script>
+
+        @* console.log("Logindata on master page----->", Logindata); *@
+        if (!Logindata) {
+            window.location.href = "Login";
+        }
+
+        var icon;
+        var menuOptions = roles_menus[Logindata.user[0].role_id][0];
+        @* var menuOptions = roles_menus[3][0];*@
+
+            //for localhost only this line of code  
+            protocol = location.protocol;
+        domain = location.hostname;
+        port = location.port;
+        var url = window.location.href;
+        var parts = url.split("/");
+        var id = parts[parts.length - 1];
+
+        if (parts[5] === undefined) {
+            var route = "../Home/";
+        } else {
+            var route = "../";
+        }
+
+        $.each(menuOptions, function (key, value) {
+            $.each(icons_list, function (ikey, ivalue) {
+                if (ikey == key) { icon = ivalue }
+            });
+            var $li = $("<li>");
+            var $a = $("<a>").attr({
+                "asp-controller": "Home",
+                "asp-action": key,
+                "href": route + key,
+                "class": "Home",
+            }).addClass("nav-link").html(`${icon}<span>${value}</span>`);
+            $li.append($a);
+            $("#sidebar-nav").append($li);
+        });
+        var $li = $("<li>");
+        $b = $("<a>").addClass("nav-link").attr({ "onclick": "logout()" }).html(`<span class="material-symbols-rounded">logout</span><span>LogOut</span>`);
+        $li.append($b);
+        $("#sidebar-nav").append($li);
+
+        $(document).on("click", ".Home", function () {
+            activeMenuItem = $(this).attr("asp-action");
+            localStorage.setItem("sidemenu", activeMenuItem);
+        });
+
+        var activeMenuItem = localStorage.getItem("sidemenu");
+        if (activeMenuItem == null) {
+            activeMenuItem = "NewIndent";
+        }
+        // Iterate through the side menu items
+        $("#sidebar-nav li").each(function () {
+            var menuItem = $(this).find("a").attr("asp-action");
+            if (menuItem === activeMenuItem) {
+                $(this).addClass("active");
+            }
+        });
+        var notification_Payload = { user_id: User_id };
+        // notification_logs Api call hear
+        function Notifications() {
+            document.getElementById("noticationbody").innerHTML = "";
+            $.ajax({
+                url: notification_API,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(notification_Payload),
+                success: function (response) {
+                    if (response.success === true) {
+                        // console.log("notification_logs js ->Get successfully:", response);
+                        document.getElementById("notifications_no").innerHTML = "";
+                        if (response.notification_logs.length == 0) {
+                            $("#notifications_no").hide();
+                        } else {
+                            document.getElementById("notifications_no").innerHTML = response.notification_logs.length;
+                        }
+                        document.getElementById("noticationbody").innerHTML = "";
+                        response.notification_logs.forEach((element) => {
+                            var inputTimestamp = new Date(element.created_at);
+                            const formattedTime = getTimeAgo(inputTimestamp);
+                            document.getElementById("noticationbody").innerHTML += `
+                            <div class="notification-wrap">
+                                <div class="notification-inner">
+                                    <div class="user-img"><img src="/images/profile.28fb3626.jpg"></div>
+                                    <div class="user-info">
+                                    <h3 onclick="handleClick(${element.order_id},${element.id
+                                })">${element.message}</h3>
+                                            <p>(${element.product_id + "-" + element.name
+                                })</p>
+                                        <p>${formattedTime}</p>
+                                    </div>
+                                </div>
+                            </div>`;
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    if (status === "error") {
+                        spinner(false);
+                        console.log("Error: " + error);
+                        toast("warning", error);
+                    }
+                },
+                error: function (error) {
+        @* toast("error", error); *@
+                        toast("error", "Network error. Please try again later.");
+                    console.error("Error creating data on user_store_locations:->>", error);
+                },
+            });
+        }
+        if (User_role != 13 || User_role != 12) {
+            Notifications();
+        }
+
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/assets/toastr/toastr.min.js"></script>
+</body>
+
+</html>

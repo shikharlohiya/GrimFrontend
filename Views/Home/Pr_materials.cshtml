@@ -1,0 +1,281 @@
+@* <link rel="stylesheet" type="text/css" href="~/css/MyRequests.css"> *@
+@* <link rel="stylesheet" type="text/css"
+href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0-alpha3/css/bootstrap.min.css"> *@
+@* for table *@
+@* <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css"> *@
+<!-- Include DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+<!--Google icon cdn -->
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<style>
+    .dropdown-content .active {
+        background-color: #0088cc;
+        /* You can customize the background color for the active option */
+    }
+
+    .pr_materials_table.table-wrapper {
+        overflow-x: auto;
+    }
+
+    .pr_materials_table table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .pr_materials_table td,
+    .pr_materials_table th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    .pr_materials_table .sticky-column {
+        position: sticky;
+        right: 0;
+        background-color: #f0f0f0;
+        z-index: 2;
+    }
+
+    @*.pr_materials_tabletabletheadth:last-child{position:sticky;right:0;background-color:#f0f0f0;z-index:2;}*@.pr_materials_table .table-wrapper {
+        max-width: 100%;
+        overflow: auto;
+    }
+
+    .pr_materials_table .table-wrapper {
+        width: 100%;
+        max-height: 400px;
+        /* / Set the maximum height for vertical scrolling /  */
+        overflow: auto;
+    }
+
+    .pr_materials_table .sub-row {
+        display: none;
+    }
+
+    .pr_materials_table .expanded {
+        display: table-row;
+    }
+
+    .pr_materials_table .action-button {
+        border: none;
+        background: none;
+    }
+
+    .pr_materials_table .action-button .material-symbols-rounded.material-remove,
+    .action-button.action-icons .material-symbols-rounded.material-add {
+        display: none;
+    }
+
+    .pr_materials_table .action-button.action-icons .material-symbols-rounded.material-remove {
+        display: block;
+    }
+
+    .pr_materials_table .table-input input {
+        border: none;
+        border-bottom: 1px solid #000 !important;
+        width: 100%;
+        outline: none;
+    }
+</style>
+<section id="content-wrapper">
+
+    <div class="container-fluid">
+        <div class="indent-main-wrapper">
+            <div class="">
+
+
+                <!-- START TABS DIV -->
+
+
+                <div class="tab-content" style="margin-top:2px">
+                    <div class="tab-pane fade show active" id="eleve" role="tabpanel" aria-labelledby="eleve-tab">
+                        <!-- START TABS DIV -->
+                        <div class="row tabbable-responsive inner-tab align-items-center">
+                            <div class="col-xl-5 col-12 d-flex flex-wrap">
+                                <div class="tabbable mb-xl-0 mb-5 inner-btn-tab">
+                                    <ul class="nav nav-pills nav-justified" id="eleve-nav" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active outline-border" onclick="setPRMaterialsvalue(1)"
+                                                id="eleve-eco-tab" data-toggle="tab" href="#eleve-eco" role="tab"
+                                                aria-controls="first" aria-selected="true">
+                                                <div class="position">
+                                                    Request for PR
+                                                    @* <span class="badge badgeup badge-success badgepending">1</span>
+                                                    *@
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link outline-border" onclick="setPRMaterialsvalue(2)"
+                                                id="eleve-standard-tab" data-toggle="tab" href="#eleve-standard"
+                                                role="tab" aria-controls="second" aria-selected="false">
+                                                <div class="position">
+                                                    Reject PR
+                                                    @* <span class="badge badgeup badge-success badgeopen">1</span> *@
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link outline-border" onclick="setPRMaterialsvalue(3)"
+                                                id="eleve-standard-tab1" data-toggle="tab" href="#eleve-standard1"
+                                                role="tab" aria-controls="second1" aria-selected="false">
+                                                <div class="position">
+                                                    Cancel PR
+                                                    @* <span class="badge badgeup badge-success badgeclose">1</span> *@
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link outline-border" onclick="setPRMaterialsvalue(5)"
+                                                id="eleve-standard-tab3" data-toggle="tab" href="#eleve-standard3"
+                                                role="tab" aria-controls="second3" aria-selected="false">
+                                                <div class="position">
+                                                    Hold PR
+                                                    @* <span class="badge badgeup badge-success badgeclose">1</span> *@
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link outline-border" onclick="setPRMaterialsvalue(4)"
+                                                id="eleve-standard-tab2" data-toggle="tab" href="#eleve-standard2"
+                                                role="tab" aria-controls="second2" aria-selected="false">
+                                                <div class="position">
+                                                    Raise STO
+                                                    @* <span class="badge badgeup badge-success badgeall">1</span> *@
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 col-12 d-flex flex-wrap justify-content-end">
+                                <div class="indent-tab-filter">
+                                    <div class="indent-tab-item">
+                                        <select name="dropdown" id="dropdown_Pr_materials" class="form-select"
+                                            aria-label="Default select example" style="height: fit-content;"></select>
+                                    </div>
+                                    <div class="indent-tab-item">
+                                        <span class="material-symbols-rounded ConsolidateIndents"
+                                            style="vertical-align: middle;color: blue;font-size: x-large;">
+                                            cloud_download
+                                        </span>
+                                    </div>
+                                    <div class="indent-tab-item">
+                                        <button class="common-button Custom-btn common-blue-button"
+                                            onclick="printpage('tab-content-print')">
+                                            <span class="material-symbols-rounded">print</span>
+                                            PRINT
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="tab-content-print">
+                            <div class="tab-pane fade show active" id="eleve-eco" role="tabpanel"
+                                aria-labelledby="eleve-eco-tab">
+
+                                <div class="table-wrapper pr_materials_table"></div>
+                                <br>
+                                <div class="row" id="dropdownlist" style="display: none;">
+                                    <div class="col">
+                                        <label for="store_plants">STO Access Stores*</label>
+                                        <select class="form-select" id="store_plants"
+                                            aria-label="Default select example"></select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="user_store_locations">Delivery Locations*</label>
+                                        <select class="form-select" id="user_store_locations"
+                                            aria-label="Default select example"></select>
+                                    </div>
+                                </div>
+                                <div class="PRbutton" id="PRbutton" style="display: none;">
+                                    @* <button type="submit" class="common-button Custom-btn common-blue-button"
+                                    id="Request_for_PR">Request for PR</button> *@
+                                </div>
+
+                                <!-- ****************************************************** -->
+                                <!-- END inner tab one -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="spinnerbody" id="spinnerbody">
+        <div class="spinnerchild">
+            <div class="spinner-border text-success " role="status">
+                <span class="sr-only"></span>
+            </div>
+            <span>Loading....</span>
+        </div>
+    </div>
+</section>
+<div style="display:none;">
+    <br><br><br><br>
+    <table id="Consolidate_Indents_data" class="display">
+        <thead>
+            <tr>
+                <th>Material Id</th>
+                <th>Base Unit</th>
+                <th>Material Name</th>
+                <th>Quantity</th>
+                <th>WBS NO</th>
+                <th>WBS Name</th>
+                <th>Indents</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    window.ApiUrl1 = '@Model.ApiUrl1';
+    window.ApiUrl2 = '@Model.ApiUrl2';
+    window.BaseUrl = '@Model.BaseUrl';
+    window.Port1 = '@Model.Port1';
+    window.Port2 = '@Model.Port2';
+    window.Endpoint1 = '@Model.Endpoint1';
+    window.Endpoint2 = '@Model.Endpoint2';
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+@* table script *@
+@*
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script> *@
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+@* for table *@
+<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
+@* fixedColumns *@
+<script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+@* <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> *@
+
+@*new cdm for filter*@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+@* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> *@
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
+@*new cdm for filter end*@
+
+<script src="~/assets/toastr/toastr.min.js"></script>
+<script src="~/js/main.js"></script>
+<script src="~/js/Pr_materials/Pr_materials.js"></script>

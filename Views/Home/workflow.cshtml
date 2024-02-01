@@ -1,0 +1,245 @@
+<link
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+<link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+
+
+<style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .NewBtn{    
+        color: #fff;
+        border-radius: 5px;
+        padding: 4px 8px;
+        font-size: small;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      select,
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+      }
+      .btn {
+        padding: 7px 14px;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      .btn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      .step {
+        display: none;
+      }
+      .step.active {
+        display: block;
+      }
+
+</style>
+
+   <!-- Modal for adding an entry -->
+    <div class="modal fade" id="addModal" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <!-- Stepper Navigation -->
+          @* <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link active" href="#step1">Step 1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#step2">Step 2</a>
+            </li>
+          </ul> *@
+          <div class="modal-body">
+            <!-- Step 1: Form -->
+            <div id="step1">
+              <h5 id="workflowModalLabel">Workflow Details</h5>
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="name">Name*:</label>
+                  <input type="text" id="name" class="form-control" required />
+                </div>
+                <div class="col-md-4">
+                  <label for="request-type">Request Type*:</label>
+                  <select id="request-type" class="form-control" required>
+                    <!-- Your provided options -->
+                    @* <option value="">Select Request</option>
+                    <option value="1">Indent Request</option>
+                    <option value="2">Urgent Indent Request</option>
+                    <option value="3">Service Request</option>
+                    <option value="4">Code Creation Request</option>
+                    <option value="5">Special Material Indent Request</option> *@
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="status">Status*:</label>
+                  <select id="status" class="form-control" required>
+                    <option value="99999">Select</option>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <label for="description">Description:</label>
+                  <textarea id="description" class="form-control"></textarea>
+                </div>
+                <div>
+                  <small class="form-text text-muted"
+                    >*indicates required field</small
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- Step 2: Table (Initially hidden) -->
+            <div id="step2" style="display: none">
+              <h5 >Add Workflow Steps</h5>
+              <!-- Table to display data -->
+              <table id="editTable" class="table">
+                <thead>
+                  <tr>
+                    <th>SI No</th>
+                    <th>Role</th>
+                    <!-- Column for Urgent Flag (hidden by default) -->
+                    <th id="urgentFlagHeader" style="display: none">
+                      Urgent Flag
+                    </th>
+                    <!-- Column based on Request Type -->
+                    <th id="amountHeader">Amount</th>
+                    <!-- Move "TAT (Hrs)" here -->
+                    <th>TAT (Hrs)</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Table rows will be added here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Modal Footer with Save Button -->
+          <div class="modal-footer">
+            <!-- Cancel Button -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              id="cancelModalBtn"
+            >
+              Cancel
+            </button>
+            <!-- Save Button -->
+            <button
+              type="button"
+              class="btn btn-success"
+              id="saveBtn"
+              style="display: none"
+            >
+              Save
+            </button>
+            <!-- Previous Button -->
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="prevBtn"
+              style="display: none"
+            >
+              Previous
+            </button>
+            <!-- Next Button -->
+            <button type="button" class="btn btn-primary" id="nextBtn" disabled>
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div> 
+
+<section id="content-wrapper">
+    <h3>Workflows</h3>
+    <nav style="
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-content: center;
+    align-items: center;
+    margin: 17px;
+">
+ <!-- Trigger button to open the modal for adding an entry -->
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#addModal"
+      onclick="clear_data()"
+    >
+     + Add
+    </button>
+@* <button class="lable_button lightblue" onclick="addrole()" style="
+    font-size: larger;
+">+Add</button> *@
+</nav>
+    <table id="Userlist" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>S No</th>
+                <th>Name</th>
+                <th>Server Request</th>
+                <th>Department</th>
+                <th>Created At</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</section>
+
+<script>
+    window.ApiUrl1 = '@Model.ApiUrl1';
+    window.ApiUrl2 = '@Model.ApiUrl2';
+    window.BaseUrl = '@Model.BaseUrl';
+    window.Port1 = '@Model.Port1';
+    window.Port2 = '@Model.Port2';
+    window.Endpoint1 = '@Model.Endpoint1';
+    window.Endpoint2 = '@Model.Endpoint2';
+</script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+@*new cdn*@
+<!-- Include Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script
+    src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<script
+    src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+
+<script src="~/js/main.js"></script>
+<script src="~/js/workflow/workflow.js"></script>
+
+@* 20/09/23 *@
+
+   
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    
+  

@@ -1,0 +1,1063 @@
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+@* <script src="https://cdnjs.cloudflare.com/ajax/libs/csv2xlsx/1.0.0/csv2xlsx.min.js"></script> *@
+@* table cdn *@
+<link
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+<link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+@* table cdn  end *@
+
+@* new cdn 03-08-23
+ *@
+<link href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.css" rel="stylesheet">
+
+@* new code cdn for download cvs *@
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+
+ <!-- Include xlsx library -->
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script> *@
+
+ <!-- Include papaparse and xlsx libraries -->
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/papaparse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script> *@
+
+
+<style>
+#myChart{
+    display: block;
+    box-sizing: border-box;
+    height: 472px;
+    width: 944px;
+}
+</style>
+
+
+
+        
+@* table cdn *@
+
+<section id="content-wrapper">
+    <div class="container-fluid">
+        <div class="reports-wrapper">
+            <div class="row size">
+
+                <div class="col-md-3">
+                    <!-- Tabs nav -->
+                    <div class="nav flex-column nav-pills nav-pills-custom"
+                        id="v-pills-tab" role="tablist"
+                        aria-orientation="vertical">
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <!-- Tabs content -->
+                    <div class="tab-content" id="v-pills-tabContent">
+
+                        <!-- charts bar-->
+                        <div
+                            class="tab-pane fade shadow rounded bg-white show active p-5"
+                            id="v-pills-Indent_Status"
+                            role="tabpanel"
+                            aria-labelledby="v-pills-home-tab">
+                            <div class="report navbar">
+                                <h4 class="font-italic mb-4">Reports</h4>
+                                 
+                                <select id="dateRangeSelectChartOnly">
+                                    <option value="Today">Today</option>
+                                    <option value="Yesterday">Yesterday</option>
+                                    <option value="Last 7 Days">Last 7 Days</option>
+                                    <option value="Last 30 Days">Last 30 Days</option>
+                                    <option value="This Month">This Month</option>
+                                    <option value="Last Month">Last Month</option>
+                                    <option value="Custom Range">Custom Range</option>
+                                </select>
+
+                                <div id="customRangeInputsChartOnly"
+                                    style="display: none;">
+                                    From: <input type="date" id="customFromDateChartOnly">
+                                    To: <input type="date" id="customToDateChartOnly">
+                                    <button id="applyCustomRangeChartOnly">Apply</button>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-content" id="v-pills-tabContent">
+                                <div class="download-buttons">
+                                    <button class="lable_button blue" id="download-pdf">PDF</button>
+                                    <button class="lable_button blue" id="download-png">PNG</button>
+                                    <button class="lable_button blue" id="download-jpg">JPG</button>
+                                    <button class="lable_button blue" id="download-svg">SVG</button>
+                                    <button class="lable_button blue" id="show-table">Show table</button>
+                                    @* <button class="lable_button blue" id="download-csv">CSV</button>
+                                    <button class="lable_button blue" id="download-xls">XLS</button> *@
+                                </div>
+                                <div class="chartbox" style="width: 100%; height: 60%;">
+                                    <canvas id="myChart" width="944"
+                                        height="472"></canvas>
+                                </div>
+                                <div class="table_chartbox" id="table_chartbox" style="display: none;">
+                                <div class="container mt-5">
+                                    <h1>indent-status</h1>
+                                    <table
+                                        id="example_indent_status"
+                                        class="table table-striped table-bordered"
+                                        style="width: 100%"
+                                    >
+                                        <thead>
+                                        <tr>
+                                            <th class="highcharts-text" scope="col">Category</th>
+                                            <th class="highcharts-text" scope="col">Pending</th>
+                                            <th class="highcharts-text" scope="col">Approved</th>
+                                            <th class="highcharts-text" scope="col">Rejected</th>
+                                            <th class="highcharts-text" scope="col">Dispatched</th>
+                                            <th class="highcharts-text" scope="col">Completed</th>
+                                            <th class="highcharts-text" scope="col">PRRaised</th>
+                                            <th class="highcharts-text" scope="col">PORaised</th>
+                                            <th class="highcharts-text" scope="col">GRNDone</th>
+                                            <th class="highcharts-text" scope="col">ReturnPending</th>
+                                            <th class="highcharts-text" scope="col">ReturnApproved</th>
+                                            <th class="highcharts-text" scope="col">ReturnCompleted</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!-- Add more rows as needed -->
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Indent_Reports *@
+                        <div
+                            class="tab-pane fade shadow rounded bg-white p-5"
+                            id="v-pills-Indent_Reports"
+                            role="tabpanel"
+                            aria-labelledby="v-pills-profile-tab">
+                            <div class="report navbar">
+                                <h4 class="font-italic mb-1">
+                                    Indent Summerised Report &nbsp;&nbsp;
+                                <span class="material-symbols-rounded Indent_Summerised_Report" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                cloud_download
+                                </span>
+                                </h4>
+                                <div class="filter-btn-wrap">
+                                     <button type="submit"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasRight"
+                                        aria-controls="offcanvasRight">
+                                        <span class="material-symbols-rounded" style="font-size: xx-large;">filter_alt</span>
+                                        </button> 
+                                        @* <button class="common-button-icon"><span 
+                                                        class="material-symbols-rounded" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">filter_list</span>
+                                                </button> *@
+                                </div>
+                            </div>
+                            <table id="Indent_Summerised_Report"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>Indent Date</th>
+                                        <th>Indent No</th>
+                                        <th>Indent Status</th>
+                                        <th>Indent Total Quantity</th>
+                                        <th>Indent Price</th>
+                                        <th>Indent Location</th>
+                                        <th>Indent Raised By</th>
+                                        <th>Approved By</th>
+                                        <th>dispatch location</th>
+                                        <th>Department Name</th>
+                                        <th>Indentre Mail ID</th>
+                                        <th style="background-color: #efe9e9;">Indenter Mobile No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            @* dropdown start *@
+                            <br>
+                            <div class="report navbar"style="text-align: right">
+                                <div class="col-md-8"></div>
+                                 <div class="col-md-4  d-flex" style="flex-direction: row; flex-wrap: wrap;
+                                        align-items: center;   justify-content: space-between;">
+                                    <span class="pr-2">Rows per page</span>
+                                    <select id="choices_Indent_Reports">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="100">100</option>
+                                    </select>
+                                    <span class="pr-2 pl-2"><span id="entries_Indent_Reports"></span> of <span id="total_Indent_Reports"></span></span>
+                                    <span> 
+                                        <div class="btn" id="prevButton_Indent_Reports" onclick="chevron_left()" >
+                                            <span class="material-symbols-rounded">
+                                                chevron_left
+                                            </span>
+                                        </div></span>
+                                    <span> 
+                                        <div class="btn" id="nextButton_Indent_Reports" onclick="chevron_right()">
+                                            <span class="material-symbols-rounded">
+                                                chevron_right
+                                            </span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <br><br>
+                            @* dropdown end *@
+                            <div class="report navbar">
+                                <h4 class="font-italic mb-4">
+                                    Indent Report
+                                    <span class="material-symbols-rounded Indent_Report" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                    cloud_download
+                                    </span>
+                                </h4>
+                                
+                            </div>
+                            <table id="Indent_Report"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Indent No</th>
+                                        <th>Indent Line Item No</th>
+                                        <th>Indent Date</th>
+                                        <th>Material No</th>
+                                        <th>Material Name</th>
+                                        <th>Material UOM</th>
+                                        <th>Request Qty</th>
+                                        <th>Material Group</th>
+                                        <th>Material Category</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th>Indent Manager Name</th>
+                                        <th>Indent Manager Approval Date</th>
+                                        <th>Sub HOD Name</th>
+                                        <th>Sub HOD Approval Date</th>
+                                        <th>HOD Name</th>
+                                        <th>HOD Approval Date</th>
+                                        <th>Request Manager Approval Date</th>
+                                        <th>Remarks</th>
+                                        <th>Request Manager Hold Date</th>
+                                        <th>Remarks</th>
+                                        <th>Request Manager Reject Date</th>
+                                        <th>Remarks</th>
+                                        <th>PR Request Date</th>
+                                        <th>PR Request Qty</th>
+                                        <th>PR Request Remark</th>
+                                        <th>PR Cancel Date</th>
+                                        <th>PR Cancel Remark</th>
+                                        <th>PR Reject Date</th>
+                                        <th>PR Reject Remark</th>
+                                        <th>PR Number</th>
+                                        <th>PR Date</th>
+                                        <th>PO Number</th>
+                                        <th>PO Date</th>
+                                        <th>GRN Number</th>
+                                        <th>GRN Date</th>
+                                        <th>Dispatch Date</th>
+                                        <th>Dispatch Qty</th>
+                                        <th>Issue Document No</th>
+                                        <th>STO Date</th>
+                                        <th>STO Qty</th>
+                                        <th>STO Indent Id</th>
+                                        <th>Store Location Code</th>
+                                        <th>Store Location Name</th>
+                                        <th>Request Location Code</th>
+                                        <th>Request Location Name</th>
+                                        <th>Tracking Plant</th>
+                                        <th>Indenter Name</th>
+                                        <th>Department Name</th>
+                                        <th>Indenter Mobile No</th>
+                                        <th>Indentre Mail ID</th>
+                                        <th>Where in Plant</th>
+                                        <th>Reason</th>
+                                        <th style="background-color: #efe9e9;">Where Used</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                             <table id="Indent_Report_download"
+                                class="display nowrap" style="width:100%;display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>Indent No</th>
+                                        <th>Line Item No</th>
+                                        <th>Indent Date</th>
+                                        <th>Material No</th>
+                                        <th>Material Name</th>
+                                        <th>Material UOM</th>
+                                        <th>Request Qty</th>
+                                        <th>Material Group</th>
+                                        <th>Material Category</th>
+                                        <th>Price</th>
+                                        <th>Material Status</th>
+                                        <th>Indent Manager Name</th>
+                                        <th>Indent Manager Approval Date</th>
+                                        <th>Sub HOD Name</th>
+                                        <th>Sub HOD Approval Date</th>
+                                        <th>HOD Name</th>
+                                        <th>HOD Approval Date</th>
+                                        <th>Request Manager Approval Date</th>
+                                        <th>Request Manager Approval Remarks</th>
+                                        <th>Request Manager Hold Date</th>
+                                        <th>Request Manager Hold Remarks</th>
+                                        <th>Request Manager Reject Date</th>
+                                        <th>Request Manager Reject Remarks</th>
+                                        <th>PR Request Date</th>
+                                        <th>PR Request Qty</th>
+                                        <th>PR Request Remark</th>
+                                        <th>PR Cancel Date</th>
+                                        <th>PR Cancel Remark</th>
+                                        <th>PR Reject Date</th>
+                                        <th>PR Reject Remark</th>
+                                        <th>PR Number</th>
+                                        <th>PR Date</th>
+                                        <th>PO Number</th>
+                                        <th>PO Date</th>
+                                        <th>GRN Number</th>
+                                        <th>GRN Date</th>
+                                        <th>Dispatch Date</th>
+                                        <th>Dispatch Qty</th>
+                                        <th>Issue Document No</th>
+                                        <th>STO Date</th>
+                                        <th>STO Qty</th>
+                                        <th>STO Indent Id</th>
+                                        <th>Store Location Code</th>
+                                        <th>Store Location Name</th>
+                                        <th>Request Location Code</th>
+                                        <th>Request Location Name</th> 
+                                        <th>Tracking Plant</th>
+                                        @* <th>Indenter Name</th> *@
+                                        <th>Department Name</th>
+                                        <th>WBS No</th>
+                                        <th>Indentre Mail ID</th>
+                                        <th>Indenter Mobile No</th>
+                                        <th>Where in Plant</th>
+                                        <th>Reason</th>
+                                        <th style="background-color: #efe9e9;">Where Used</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        @* User_Reports *@
+                        <div
+                            class="tab-pane fade shadow rounded bg-white p-5"
+                            id="v-pills-User_Reports"
+                            role="tabpanel"
+                            aria-labelledby="v-pills-messages-tab">
+                             <div class="report navbar">
+                                <h4 class="font-italic mb-4">User Report
+                                    <span class="material-symbols-rounded User_Reports" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                    cloud_download
+                                    </span>
+                                </h4>
+                                <div class="filter-btn-wrap">
+                                        <button type="submit"
+                                            data-bs-toggle="offcanvas"
+                                            data-bs-target="#offcanvasRight"
+                                            aria-controls="offcanvasRight">
+                                            <span class="material-symbols-rounded" style="font-size: xx-large;">filter_alt</span></button>
+                                    </div>
+                             </div>
+                            <table id="User_Reports"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>User Name</th>
+                                        <th>User Id</th>
+                                        <th>Indent Date</th>
+                                        <th>Indent No</th>
+                                        <th>Material Status</th>
+                                        <th>Indent Line Item No</th>
+                                        <th>Material No</th>
+                                        <th>Material Category</th>
+                                        <th>Material Group</th>
+                                        <th>Material Name</th>
+                                        <th>Material Qty</th>
+                                        <th>Material UOM</th>
+                                        <th>Price</th>
+                                        <th>Store Location Code</th>
+                                        <th>Store Location Name</th>
+                                        <th>Approved By</th>
+                                        <th>Approval Date</th>
+                                        <th>Department Name</th>
+                                        <th>Request Location Code</th>
+                                        <th>Request Location Name</th>
+                                        <th>WBS No</th>
+                                        <th>Indentre Mail ID</th>
+                                        <th style="background-color: #efe9e9;">Indenter Mobile No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            @* dropdown start *@
+                            <br>
+                            <div class="report navbar"style="text-align: right">
+                                <div class="col-md-8"></div>
+                                 <div class="col-md-4  d-flex" style="flex-direction: row; flex-wrap: wrap;
+                                        align-items: center;   justify-content: space-between;">
+                                    <span class="pr-2">Rows per page</span>
+                                    <select id="choices_User_Reports">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="100">100</option>
+                                    </select>
+                                    <span class="pr-2 pl-2"><span id="entries_User_Reports"></span> of <span id="total_User_Reports"></span></span>
+                                    <span> 
+                                        <div class="btn" id="prevButton_User_Reports" onclick="chevron_left()" >
+                                            <span class="material-symbols-rounded">
+                                                chevron_left
+                                            </span>
+                                        </div></span>
+                                    <span> 
+                                        <div class="btn" id="nextButton_User_Reports" onclick="chevron_right()">
+                                            <span class="material-symbols-rounded">
+                                                chevron_right
+                                            </span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            @* dropdown end *@
+                            <br><br>
+                            <h4 class="font-italic mb-4">User Summerised Report
+                                @* <span class="material-symbols-rounded User_Summerised_Report" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                cloud_download
+                                </span> *@
+                            </h4>
+                            <table id="User_Summerised_Report"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>Indenter User Name</th>
+                                        <th>Indenter User ID</th>
+                                        <th>Count Of Total Indent</th>
+                                        <th>Count Of Total Materials</th>
+                                        <th>Pending</th>
+                                        <th>Approved</th>
+                                        <th>Rejected</th>
+                                        <th>Dispatched</th>
+                                        <th>PRRaised</th>
+                                        <th>PO Raised</th>
+                                        <th>GRN Done</th>
+                                        <th>PR Rejected</th>
+                                        <th>Received</th>
+                                        <th>Return</th>
+                                        <th>Return Approved</th>
+                                        <th>Return Completed</th>
+                                        <th>STO Raised</th>
+                                        <th>STO Dispatched</th>
+                                        <th style="background-color: #efe9e9;">STO Received</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <br><br>
+
+                            <h4 class="font-italic mb-4">Users
+                                @* <span class="material-symbols-rounded users" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                cloud_download
+                                </span> *@
+                            </h4>
+                            <table id="users"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>Date</th>
+                                        <th>Location Name /NO</th>
+                                        <th>User Name</th>
+                                        <th>User ID</th>
+                                        <th>Department</th>
+                                        <th>Last Login Date/Time</th>
+                                        <th style="background-color: #efe9e9;">Last Logout Date/Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <br><br>
+
+                        </div>
+
+                        @* Material_Reports *@
+                        <div
+                            class="tab-pane fade shadow rounded bg-white p-5"
+                            id="v-pills-Material_Reports"
+                            role="tabpanel"
+                            aria-labelledby="v-pills-settings-tab">
+                             <div class="report navbar">
+                                <h4 class="font-italic mb-4">Material Report
+                                    <span class="material-symbols-rounded Material_Report" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                    cloud_download
+                                    </span>
+                                </h4>
+                                <div class="filter-btn-wrap">
+                                    <button type="submit"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasRight"
+                                        aria-controls="offcanvasRight">
+                                        <span class="material-symbols-rounded" style="font-size: xx-large;">filter_alt</span></button>
+                                </div>
+                             </div>
+                            <table id="Material_Report"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>Indent Date</th>
+                                        <th>Indent No</th>
+                                        <th>Material Status</th>
+                                        <th>Indent Line Item No</th>
+                                        <th>Material No</th>
+                                        <th>Material Category</th>
+                                        <th>Material Group</th>
+                                        <th>Material Name</th>
+                                        <th>Material Qty</th>
+                                        <th>Material UOM</th>
+                                        <th>Price</th>
+                                        <th>Store Location Code</th>
+                                        <th>Store Location Name</th>
+                                        <th>Approved By</th>
+                                        <th>Approval Date</th>
+                                        <th>Department Name</th>
+                                        <th>Request Location Code</th>
+                                        <th>Request Location Name</th>
+                                        <th>WBS No</th>
+                                        <th>Indentre Mail ID</th>
+                                        <th style="background-color: #efe9e9;">Indenter Mobile No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            @* dropdown start *@
+                            <br>
+                            <div class="report navbar"style="text-align: right">
+                                <div class="col-md-8"></div>
+                                 <div class="col-md-4  d-flex" style="flex-direction: row; flex-wrap: wrap;
+                                        align-items: center;   justify-content: space-between;">
+                                    <span class="pr-2">Rows per page</span>
+                                    <select id="choices_Material_Reports">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="100">100</option>
+                                    </select>
+                                    <span class="pr-2 pl-2"><span id="entries_Material_Reports"></span> of <span id="total_Material_Reports"></span></span>
+                                    <span> 
+                                        <div class="btn" id="prevButton_Material_Reports" onclick="chevron_left()" >
+                                            <span class="material-symbols-rounded">
+                                                chevron_left
+                                            </span>
+                                        </div></span>
+                                    <span> 
+                                        <div class="btn" id="nextButton_Material_Reports" onclick="chevron_right()">
+                                            <span class="material-symbols-rounded">
+                                                chevron_right
+                                            </span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            @* dropdown end *@
+                            <br><br>
+
+                            <h4 class="font-italic mb-4">Material Summerised Report
+                                    <span class="material-symbols-rounded Material_Summerised_Report" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                    cloud_download
+                                    </span>
+                            </h4>
+                            <table id="Material_Summerised_Report"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>Material No</th>
+                                        <th>Material Name</th>
+                                        <th>Material Location</th>
+                                        <th>Material Current Stock</th>
+                                        <th>Last Stock Update date/time</th>
+                                        <th>Material Category</th>
+                                        <th>Material Group</th>
+                                        <th>Material Indent Qty</th>
+                                        <th>Material UOM</th>
+                                        <th>Price</th>
+                                        <th>Count Of Indent</th>
+                                        <th>Last Indent Date</th>
+                                        <th>Max Qty</th>
+                                        <th style="background-color: #efe9e9;">Min Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            @* dropdown start *@
+                            <br>
+                            <div class="report navbar"style="text-align: right">
+                                <div class="col-md-8"></div>
+                                 <div class="col-md-4  d-flex" style="flex-direction: row; flex-wrap: wrap;
+                                        align-items: center;   justify-content: space-between;">
+                                    <span class="pr-2">Rows per page</span>
+                                    <select id="choices_Material_Reports_1">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="100">100</option>
+                                    </select>
+                                    <span class="pr-2 pl-2"><span id="entries_Material_Reports_1"></span> of <span id="total_Material_Reports_1"></span></span>
+                                    <span> 
+                                        <div class="btn" id="prevButton_Material_Reports_1" onclick="chevron_left_1()" >
+                                            <span class="material-symbols-rounded">
+                                                chevron_left
+                                            </span>
+                                        </div></span>
+                                    <span> 
+                                        <div class="btn" id="nextButton_Material_Reports_1" onclick="chevron_right_1()">
+                                            <span class="material-symbols-rounded">
+                                                chevron_right
+                                            </span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            @* dropdown end *@
+                            <br><br>
+                        </div>
+
+                        @* PR_PO_GRN_Reports *@
+                        <div
+                            class="tab-pane fade shadow rounded bg-white p-5"
+                            id="v-pills-PR_PO_GRN_Reports"
+                            role="tabpanel"
+                            aria-labelledby="v-pills-settings-tab">
+                             <div class="report navbar">
+                                <h4 class="font-italic mb-4">Indent Wise PR/PO/GRN Report
+                                    <span class="material-symbols-rounded PR_PO_GRN__Material_Report" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                    cloud_download
+                                    </span>
+                                </h4>
+                                <div class="filter-btn-wrap">
+                                    <button type="submit"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasRight"
+                                        aria-controls="offcanvasRight">
+                                        <span class="material-symbols-rounded" style="font-size: xx-large;">filter_alt</span></button>
+                                </div>
+                             </div>
+                            <table id="PR_PO_GRN_Reports"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>Indent Date</th>
+                                        <th>Indent No</th>
+                                        <th>Indent Line Item No</th>
+                                        <th>Material No</th>
+                                        <th>Material Category</th>
+                                        <th>Material Group</th>
+                                        <th>Material Name</th>
+                                        <th>Material Qty</th>
+                                        <th>Material UOM</th>
+                                        <th>Price</th>
+                                        <th>Store Location Code</th>
+                                        <th>Store Location Name</th>
+                                        <th>Indenter Name</th>
+                                        <th>Approved By</th>
+                                        <th>Department Name</th>
+                                        <th>Request Location Code</th>
+                                        <th>Request Location Name</th>
+                                        <th>PR Date</th>
+                                        <th>PR Quantity</th>
+                                        <th>PR Number</th>
+                                        <th>PO Number</th>
+                                        <th>PO Date </th>
+                                        <th>GRN Number </th>
+                                        <th style="background-color: #efe9e9;">GRN Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <br><br>
+
+                            <h4 class="font-italic mb-4">Material Wise PR/PO/GRN
+                                Report
+                                @* <span class="material-symbols-rounded Material_Wise_PR_PO_GRN_Report"style="vertical-align: middle;color: blue;cursor: pointer;">
+                                    cloud_download
+                                    </span> *@
+                            </h4>
+                            <table id="Material_Wise_PR_PO_GRN_Report"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>Material No</th>
+                                        <th>Material Name</th>
+                                        <th>PR Number</th>
+                                        <th>PR Quantity</th>
+                                        <th>Unit</th>
+                                        <th>Indent Date</th>
+                                        <th>PR Date </th>
+                                        <th>PO Number </th>
+                                        <th>PO Date </th>
+                                        <th>GRN Number </th>
+                                        <th>GRN Date</th>
+                                        <th>Plant</th>
+                                        <th>Plant Name</th>
+                                        <th>Where Used</th>
+                                        <th>Remark</th>
+                                        <th>Priority</th>
+                                        <th>Reason</th>
+                                        <th style="background-color: #efe9e9;">Tracking No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <br><br>
+                        </div>
+
+                        @* Stock_Reserved_Reports *@
+                        <div
+                            class="tab-pane fade shadow rounded bg-white p-5"
+                            id="v-pills-Stock_Reserved_Reports"
+                            role="tabpanel"
+                            aria-labelledby="v-pills-settings-tab">
+                             <div class="report navbar"> 
+                                <h4 class="font-italic mb-4">Material Report
+                                    <span class="material-symbols-rounded Stock_Reserved_Material_Report" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                    cloud_download
+                                    </span>
+                                </h4>
+                                <div class="filter-btn-wrap">
+                                        <button type="submit"
+                                            data-bs-toggle="offcanvas"
+                                            data-bs-target="#offcanvasRight"
+                                            aria-controls="offcanvasRight">
+                                            <span class="material-symbols-rounded" style="font-size: xx-large;">filter_alt</span></button>
+                                </div>
+                             </div>
+                            <table id="Stock_Reserved_Reports"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>Stock Reserved (days)</th>
+                                        <th>Indent Date</th>
+                                        <th>Indent No</th>
+                                        <th>Indent Line Item No</th>
+                                        <th>Material Status</th>
+                                        <th>Material No</th>
+                                        <th>Material Category</th>
+                                        <th>Material Group</th>
+                                        <th>Material Name</th>
+                                        <th>Material Qty</th>
+                                        <th>Material UOM</th>
+                                        <th>Price</th>
+                                        <th>Store Location Code</th>
+                                        <th>Store Location Name</th>
+                                        <th>Indenter Name</th>
+                                        <th>Approved By</th>
+                                        <th>Approval Date</th>
+                                        <th>Department Name</th>
+                                        <th>Request Location Code</th>
+                                        <th>Request Location Name</th>
+                                        <th>WBS No</th>
+                                        <th>Indenter Mail ID</th>
+                                        <th style="background-color: #efe9e9;">Indenter Mobile No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            @* dropdown start *@
+                            <br>
+                            <div class="report navbar"style="text-align: right">
+                                <div class="col-md-8"></div>
+                                 <div class="col-md-4  d-flex" style="flex-direction: row; flex-wrap: wrap;
+                                        align-items: center;   justify-content: space-between;">
+                                    <span class="pr-2">Rows per page</span>
+                                    <select id="choices_Stock_Reserved_Reports">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="100">100</option>
+                                    </select>
+                                    <span class="pr-2 pl-2"><span id="entries_Stock_Reserved_Reports"></span> of <span id="total_Stock_Reserved_Reports"></span></span>
+                                    <span> 
+                                        <div class="btn" id="prevButton_Stock_Reserved_Reports" onclick="chevron_left()" >
+                                            <span class="material-symbols-rounded">
+                                                chevron_left
+                                            </span>
+                                        </div></span>
+                                    <span> 
+                                        <div class="btn" id="nextButton_Stock_Reserved_Reports" onclick="chevron_right()">
+                                            <span class="material-symbols-rounded">
+                                                chevron_right
+                                            </span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            @* dropdown end *@
+                            <br><br>
+                        </div>
+
+                        @* Cost_Reports *@
+                        <div
+                            class="tab-pane fade shadow rounded bg-white p-5"
+                            id="v-pills-Cost_Reports"
+                            role="tabpanel"
+                            aria-labelledby="v-pills-settings-tab">
+                             <div class="report navbar"> 
+                                <h4 class="font-italic mb-4">Department Wise Cost Report</h4>
+                                <div class="filter-btn-wrap">
+                                    <button type="submit"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasRight"
+                                        aria-controls="offcanvasRight">
+                                        <span class="material-symbols-rounded" style="font-size: xx-large;">filter_alt</span></button>
+                                </div>
+                             </div>
+                                 <table id="Cost_Reports"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>Department Name</th>
+                                        <th>Total Cost Utilized</th>
+                                        <th>Cost Utilized </th>
+                                        <th>Total Budget Allocated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <br><br>
+                        </div>
+
+                        @* STO_Reports *@
+                        <div
+                            class="tab-pane fade shadow rounded bg-white p-5"
+                            id="v-pills-STO_Reports"
+                            role="tabpanel"
+                            aria-labelledby="v-pills-settings-tab">
+                             <div class="report navbar">
+                                <h4 class="font-italic mb-4">STO Summerised Report
+                                     <span class="material-symbols-rounded STO_Summerised_Report" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                    cloud_download
+                                    </span>
+                                </h4>
+                                <div class="filter-btn-wrap">
+                                    <button type="submit"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasRight"
+                                        aria-controls="offcanvasRight">
+                                        <span class="material-symbols-rounded" style="font-size: xx-large;">filter_alt</span></button>
+                                </div>
+                             </div>
+                             <table id="STO_Summerised_Report"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>Indent Date</th>
+                                        <th>Indent No</th>
+                                        <th>Indent Status</th>
+                                        <th>Indent Total Quantity</th>
+                                        <th>Indent Price</th>
+                                        <th>Indent Location</th>
+                                        <th>Indent Raised By</th>
+                                        <th>Approved By</th>
+                                        <th>dispatch location</th>
+                                        <th>Department Name</th>
+                                        <th>Indentre Mail ID</th>
+                                        <th style="background-color: #efe9e9;">Indenter Mobile No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            @* dropdown start *@
+                            <br>
+                            <div class="report navbar"style="text-align: right">
+                                <div class="col-md-8"></div>
+                                 <div class="col-md-4  d-flex" style="flex-direction: row; flex-wrap: wrap;
+                                        align-items: center;   justify-content: space-between;">
+                                    <span class="pr-2">Rows per page</span>
+                                    <select id="choices_STO_Reports">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="100">100</option>
+                                    </select>
+                                    <span class="pr-2 pl-2"><span id="entries_STO_Reports"></span> of <span id="total_STO_Reports"></span></span>
+                                    <span> 
+                                        <div class="btn" id="prevButton_STO_Reports" onclick="chevron_left()" >
+                                            <span class="material-symbols-rounded">
+                                                chevron_left
+                                            </span>
+                                        </div></span>
+                                    <span> 
+                                        <div class="btn" id="nextButton_STO_Reports" onclick="chevron_right()">
+                                            <span class="material-symbols-rounded">
+                                                chevron_right
+                                            </span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            @* dropdown end *@
+                            <br><br>
+
+                            <h4 class="font-italic mb-4">STO Report
+                                <span class="material-symbols-rounded STO_Reports" style="vertical-align: middle;color: blue;cursor: pointer;">
+                                    cloud_download
+                                    </span>
+                            </h4>
+                            <table id="STO_Report"
+                                class="display nowrap" style="width:100%">
+                                <thead>
+                                     <tr>
+                                        <th>S NO</th>
+                                        <th>Indent Date</th>
+                                        <th>Indent No</th>
+                                        <th>Material Status</th>
+                                        <th>Indent Line Item No</th>
+                                        <th>Material No</th>
+                                        <th>Material Category</th>
+                                        <th>Material Group</th>
+                                        <th>Material Name</th>
+                                        <th>Material Qty</th>
+                                        <th>Material UOM</th>
+                                        <th>Price</th>
+                                        <th>Store Location Code</th>
+                                        <th>Store Location Name</th>
+                                        @* <th>Indenter Name</th> *@
+                                        <th>Approved By</th>
+                                        <th>Department Name</th>
+                                        <th>Request Location Code</th>
+                                        <th>Request Location Name</th>
+                                        <th>WBS No</th>
+                                        <th>Indentre Mail ID</th>
+                                        <th>Indenter Mobile No</th>
+                                        <th>Tracking Plant</th>
+                                        <th>Where in Plant</th>
+                                        <th>Reason</th>
+                                        <th style="background-color: #efe9e9;">Where Used</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="spinnerbody" id="spinnerbody">
+    <div class="spinnerchild">
+        <div class="spinner-border text-success " role="status">
+            <span class="sr-only"></span>
+        </div>
+        <span>Loading....</span>
+    </div>
+</div>
+
+<script>
+    window.ApiUrl1 = '@Model.ApiUrl1';
+    window.ApiUrl2 = '@Model.ApiUrl2';
+    window.BaseUrl = '@Model.BaseUrl';
+    window.Port1 = '@Model.Port1';
+    window.Port2 = '@Model.Port2';
+    window.Endpoint1 = '@Model.Endpoint1';
+    window.Endpoint2 = '@Model.Endpoint2';
+</script>
+
+<script src="~/CDN/chart.js"></script>
+<script src="~/CDN/chartjs-plugin-datalabels.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+@* cdn for momment ude *@
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+@* cdn for momment ude *@
+
+@*table cdn*@
+<script
+    src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script
+    src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script
+    src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<script
+    src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+
+@* end cdn *@
+
+@*new cdm for filter*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+@* <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script> *@
+@*new cdm for filter end*@
+
+
+@*new cdm for filter*@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  @* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> *@
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
+@*new cdm for filter end*@
+
+
+
+<script
+      src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"
+      integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+      integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+<!-- Include the xlsx library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
+
+
+
+<script src="~/js/main.js"></script>
+<script src="~/js/Report/Report.js"></script>

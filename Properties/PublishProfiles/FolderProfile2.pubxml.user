@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\inetpub\wwwroot\grim</_PublishTargetUrl>
+    <History>True|2023-07-24T06:13:37.8361805Z;False|2023-07-24T11:43:06.8042514+05:30;False|2023-07-24T11:42:52.3833287+05:30;False|2023-07-24T11:42:30.2203000+05:30;True|2023-07-24T11:40:52.9926713+05:30;True|2023-07-24T11:38:34.6937086+05:30;True|2023-07-24T11:20:05.4595122+05:30;False|2023-07-24T11:18:22.9194393+05:30;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

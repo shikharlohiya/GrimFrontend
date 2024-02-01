@@ -1,0 +1,504 @@
+@* <link rel="stylesheet" type="text/css" href="~/css/MyRequests.css"> *@
+@* <link rel="stylesheet" type="text/css"
+href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0-alpha3/css/bootstrap.min.css"> *@
+@* for table *@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+<style>
+    .dropdown-content .active {
+        background-color: #0088cc; /* You can customize the background color for the active option */
+    }
+    .pr_materials_table.table-wrapper {
+            overflow-x: auto;
+        }
+
+        .pr_materials_table table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .pr_materials_table td,
+        .pr_materials_table th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .pr_materials_table .sticky-column {
+            position: sticky;
+            right: 0;
+            background-color: #f0f0f0;
+            z-index: 2;
+        }
+
+        .pr_materials_table table thead th:last-child {
+            position: sticky;
+            right: 0;
+            background-color: #f0f0f0;
+            z-index: 2;
+        }
+
+        .pr_materials_table .table-wrapper {
+            max-width: 100%;
+            overflow: auto;
+        }
+
+        .pr_materials_table .table-wrapper {
+            width: 100%;
+            max-height: 400px; /* / Set the maximum height for vertical scrolling /  */
+            overflow: auto;
+        }
+
+        .pr_materials_table .sub-row {
+            display: none;
+        }
+
+        .pr_materials_table .expanded {
+            display: table-row;
+        }
+
+        .pr_materials_table .action-button {
+            border: none;
+        }
+
+        .pr_materials_table .action-button .material-symbols-rounded.material-remove,
+        .action-button.action-icons .material-symbols-rounded.material-add {
+            display: none;
+        }
+
+        .pr_materials_table .action-button.action-icons .material-symbols-rounded.material-remove {
+            display: block;
+        }
+
+        .pr_materials_table .table-input input {
+            border: none;
+            border-bottom: 1px solid #000 !important;
+            width: 100%;
+        }
+</style>
+<section id="content-wrapper">
+
+    <div class="container-fluid">
+        <div class="indent-main-wrapper">
+            <div class="">
+
+
+                <!-- START TABS DIV -->
+              
+
+                <div class="tab-content" style="margin-top:2px">
+                    <div class="tab-pane fade show active" id="eleve" role="tabpanel" aria-labelledby="eleve-tab">
+                        <!-- START TABS DIV -->
+                        <div class="row tabbable-responsive inner-tab align-items-center">
+                            <div class="col-xl-4 col-12 d-flex flex-wrap">
+                                   <div class="tabbable mb-xl-0 mb-5 inner-btn-tab">
+                                <ul class="nav nav-pills nav-justified" id="eleve-nav" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active outline-border" onclick="orders_call('Pending')" id="eleve-eco-tab"
+                                            data-toggle="tab" href="#eleve-eco" role="tab" aria-controls="first"
+                                            aria-selected="true">
+                                            <div class="position">
+                                                 Request for PR 
+                                                 @* <span class="badge badgeup badge-success badgepending">1</span> *@
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link outline-border" onclick="orders_call('Open')" id="eleve-standard-tab"
+                                            data-toggle="tab" href="#eleve-standard" role="tab" aria-controls="second"
+                                            aria-selected="false">
+                                            <div class="position">
+                                                 Reject PR 
+                                                @* <span class="badge badgeup badge-success badgeopen">1</span> *@
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link outline-border" onclick="orders_call('Closed')" id="eleve-standard-tab1"
+                                            data-toggle="tab" href="#eleve-standard1" role="tab" aria-controls="second1"
+                                            aria-selected="false">
+                                            <div class="position">
+                                                 Cancel PR 
+                                                @* <span class="badge badgeup badge-success badgeclose">1</span> *@
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link outline-border" onclick="orders_call('All')" id="eleve-standard-tab2"
+                                            data-toggle="tab" href="#eleve-standard2" role="tab" aria-controls="second2"
+                                            aria-selected="false">
+                                            <div class="position">
+                                                Raise STO 
+                                                @* <span class="badge badgeup badge-success badgeall">1</span> *@
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            </div>
+                            <div class="col-xl-8 col-12 d-flex flex-wrap justify-content-end">
+                                 <div class="indent-tab-filter">
+                                    @* <div class="indent-tab-item search-container">
+                                        <form class="search-form-filter">
+                                            <div class="search-container-inner">
+                                                <input type="number"
+                                                    placeholder="Search"
+                                                    name="search" id="searchIndentNumber">
+                                                <button type="submit"><span
+                                                        class="material-symbols-rounded">search</span></button>
+                                            </div>
+                                        </form>
+                                    </div> *@
+                                     @* <div class="dropdown">
+                                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                                        Dropdown button
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Normal</a></li>
+                                        <li><a class="dropdown-item active" href="#">Active</a></li>
+                                        <li><a class="dropdown-item disabled" href="#">Disabled</a></li>
+                                        </ul>
+                                    </div> *@
+                                    <select name="dropdown" id="dropdown"></select>
+                                     <div class="report navbar">
+                                        <h4 class="font-italic mb-4">
+                                            <span class="material-symbols-rounded User_Report" style="vertical-align: middle; color: blue;">
+                                            cloud_download
+                                            </span>
+                                        </h4>
+                                        
+                                    </div>
+                                   
+                                            <div class="indent-tab-item" >
+                                                <button class="common-button Custom-btn common-blue-button" onclick="window.print()"> 
+                                                    <span class="material-symbols-rounded">print</span>
+                                                    PRINT
+                                                </button>
+                                            </div>
+                                       
+                                    
+                                   
+                                 
+                                </div>
+                            </div>
+
+                        </div>
+                       
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="eleve-eco" role="tabpanel"
+                                aria-labelledby="eleve-eco-tab">
+        
+                             
+                                <div class="table-wrapper pr_materials_table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                @* <td>
+                                                    <input type="checkbox" class="form-check-inputx rowCheckbox" id="selectAll" />
+                                                </td>
+                                                <th>S No</th>
+                                                <th>Material Name</th>
+                                                <th>Base Unit</th>
+                                                <th>Quantity</th>
+                                                <th>Purchase Quantity</th>
+                                                <th>Action</th> *@
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="form-check-inputx rowCheckbox" />
+                                                </td>
+                                                <td>1</td>
+                                                <td>36002331 - V belt- C136 </td>
+                                                <td>EA</td>
+                                                <td>4.00</td>
+                                                <td>
+                                                    <div class="table-input"> <input type="text" class="" /></div>
+                                                </td>
+
+                                                <td class="sticky-column">
+                                                    <button class="action-button" id="toggleButton">
+
+                                                        <span class="material-symbols-rounded material-add">add_circle</span>
+                                                        <span class="material-symbols-rounded material-remove">do_not_disturb_on</span>
+
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr class="sub-row">
+                                                <td colspan="7">
+                                                    <table class="sub-table">
+                                                        <!-- Sub-table content -->
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>S No</th>
+                                                                <th>ID</th>
+                                                                <th>Indent ID</th>
+                                                                <th>User ID</th>
+                                                                <th>Name</th>
+                                                                <th>Quantity</th>
+                                                                <th>Remarks</th>
+                                                                <th>Status</th>
+                                                                <th>Plant</th>
+                                                                <th>Where Used</th>
+                                                                <th>Reason</th>
+                                                                <th>Where in Plant</th>
+                                                                <th>Created At</th>
+                                                                <th>Request Manager Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="checkbox" class="form-check-inputx rowCheckboxInside" />
+                                                                </td>
+                                                                <td>1</td>
+                                                                <td>255805</td>
+                                                                <td>90459</td>
+                                                                <td>142</td>
+                                                                <td>Dinesh Kumar Sahu</td>
+                                                                <td>30000</td>
+                                                                <td>
+                                                                    <div class="table-input"> <input type="text" class="" /></div>
+                                                                </td>
+                                                                <td><button>approved</button></td>
+                                                                <td>N251</td>
+                                                                <td>PR for 30000 Kg</td>
+                                                                <td>Daily consumable material</td>
+                                                                <td>N251</td>
+                                                                <td>28th Aug 2023</td>
+                                                                <td class="sticky-column">Data 14</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="checkbox" class="form-check-inputx rowCheckboxInside" />
+                                                                </td>
+                                                                <td>1</td>
+                                                                <td>255805</td>
+                                                                <td>90459</td>
+                                                                <td>142</td>
+                                                                <td>Dinesh Kumar Sahu</td>
+                                                                <td>30000</td>
+                                                                <td>
+                                                                    <div class="table-input"> <input type="text" class="" /></div>
+                                                                </td>
+                                                                <td><button>approved</button></td>
+                                                                <td>N251</td>
+                                                                <td>PR for 30000 Kg</td>
+                                                                <td>Daily consumable material</td>
+                                                                <td>N251</td>
+                                                                <td>28th Aug 2023</td>
+                                                                <td class="sticky-column">Data 14</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                         <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="form-check-inputx rowCheckbox" />
+                                                </td>
+                                                <td>1</td>
+                                                <td>36002331 - V belt- C136 </td>
+                                                <td>EA</td>
+                                                <td>4.00</td>
+                                                <td>
+                                                    <div class="table-input"> <input type="text" class="" /></div>
+                                                </td>
+
+                                                <td class="sticky-column">
+                                                    <button class="action-button" id="toggleButton">
+
+                                                        <span class="material-symbols-rounded material-add">add_circle</span>
+                                                        <span class="material-symbols-rounded material-remove">do_not_disturb_on</span>
+
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr class="sub-row">
+                                                <td colspan="7">
+                                                    <table class="sub-table">
+                                                        <!-- Sub-table content -->
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>S No</th>
+                                                                <th>ID</th>
+                                                                <th>Indent ID</th>
+                                                                <th>User ID</th>
+                                                                <th>Name</th>
+                                                                <th>Quantity</th>
+                                                                <th>Remarks</th>
+                                                                <th>Status</th>
+                                                                <th>Plant</th>
+                                                                <th>Where Used</th>
+                                                                <th>Reason</th>
+                                                                <th>Where in Plant</th>
+                                                                <th>Created At</th>
+                                                                <th>Request Manager Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="checkbox" class="form-check-inputx rowCheckboxInside" />
+                                                                </td>
+                                                                <td>1</td>
+                                                                <td>255805</td>
+                                                                <td>90459</td>
+                                                                <td>142</td>
+                                                                <td>Dinesh Kumar Sahu</td>
+                                                                <td>30000</td>
+                                                                <td>
+                                                                    <div class="table-input"> <input type="text" class="" /></div>
+                                                                </td>
+                                                                <td><button>approved</button></td>
+                                                                <td>N251</td>
+                                                                <td>PR for 30000 Kg</td>
+                                                                <td>Daily consumable material</td>
+                                                                <td>N251</td>
+                                                                <td>28th Aug 2023</td>
+                                                                <td class="sticky-column">Data 14</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="checkbox" class="form-check-inputx rowCheckboxInside" />
+                                                                </td>
+                                                                <td>1</td>
+                                                                <td>255805</td>
+                                                                <td>90459</td>
+                                                                <td>142</td>
+                                                                <td>Dinesh Kumar Sahu</td>
+                                                                <td>30000</td>
+                                                                <td>
+                                                                    <div class="table-input"> <input type="text" class="" /></div>
+                                                                </td>
+                                                                <td><button>approved</button></td>
+                                                                <td>N251</td>
+                                                                <td>PR for 30000 Kg</td>
+                                                                <td>Daily consumable material</td>
+                                                                <td>N251</td>
+                                                                <td>28th Aug 2023</td>
+                                                                <td class="sticky-column">Data 14</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        
+                                    </table>
+                            </div>
+                                hii
+                                <div>
+                                    <div id="main">
+                                        <div class="accordion accordionbody" id="faq">
+                                            <select name="dropdown" id="dropdown_stor"></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- ****************************************************** -->
+                                <!-- END inner tab one -->
+        
+
+                            </div>
+                        
+                        </div>
+
+                    </div>
+
+                  
+
+                  
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+@* table script *@
+@* 
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script> *@
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+@* for table *@
+<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
+@* fixedColumns *@
+<script
+    src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+@* <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> *@
+
+@*new cdm for filter*@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  @* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> *@
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
+@*new cdm for filter end*@
+
+<script src="~/js/main.js"></script>
+<script src="~/js/Pr_materials/Pr_materials.js"></script>
+
+@* 29-08-23 *@
+
+
+<script>
+    $("#selectAll").on("change", function () {       
+        if ($(this).is(":checked")) {
+            $(".rowCheckbox").prop("checked", true);
+            $(".rowCheckboxInside").prop("checked", true);
+        } else {
+            $(".rowCheckbox").prop("checked", false);
+             $(".rowCheckboxInside").prop("checked", false);
+        }
+
+    });
+    $(".rowCheckbox").on("change", function () {       
+        if ($(this).is(":checked")) {
+            $(".rowCheckboxInside").prop("checked", true);
+        } else {
+             $(".rowCheckboxInside").prop("checked", false);
+        }
+
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const actionButtons = document.querySelectorAll(".action-button");
+
+        actionButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+                button.classList.toggle("action-icons");
+                const parentRow = button.closest("tr");
+                const subRow = parentRow.nextElementSibling;
+
+                if (subRow && subRow.classList.contains("sub-row")) {
+                    subRow.classList.toggle("expanded");
+                }
+            }); 
+        });
+    });
+</script>

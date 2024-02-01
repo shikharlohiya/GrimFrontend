@@ -1,0 +1,122 @@
+﻿@{
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--Google icon cdn -->
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.css" rel="stylesheet">
+<!-- Bootstrap CSS -->
+@* toastr css*@
+<link rel="stylesheet" type="text/css"
+      href="~/assets/toastr/toastr.min.css">
+
+<!------ Include the above in your HEAD tag ---------->
+<style>
+    #validator-output {
+        .valid
+
+    {
+        color: green;
+    }
+
+    .invalid {
+        color: red;
+    }
+
+    }
+
+    .box {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        background-color: #fff;
+    }
+
+    .material-symbols-rounded {
+        font-size: 24px;
+        vertical-align: middle;
+        cursor: pointer;
+        padding: 6px 10px;
+        background-color: lightgray;
+    }
+
+    .input-icon {
+        position: relative;
+    }
+
+        .input-icon i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+    .form {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 300px;
+        width: 500px;
+        box-shadow: 3px 8px 1px -2px rgba(0,0,0,.2), 1px 7px 2px 0 rgba(0,0,0,.14), 0 5px 5px 0 rgba(0,0,0,.12);
+    }
+
+    .btn {
+        margin-top: 10px;
+    }
+
+</style>
+
+
+<div class="box" id="restpassword" style="display: none;">
+    <form class="form">
+        <h2>Reset Password</h2>
+        <div class="form-group">
+            <label for="exampleInputPassword1">New Password</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <div class="input-group-addon">
+                    <span id="togglePassword" class="material-symbols-rounded">visibility</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1-confirmation">Password Confirmation</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="exampleInputPasswor1-confirmation" placeholder="Password">
+                <div class="input-group-addon ">
+                    <span id="togglePassword1" class="material-symbols-rounded">visibility</span>
+                </div>
+            </div>
+        </div>
+        <button id="submit" type="button" onclick="onResetPassword()" class="btn btn-primary">Reset Password</button>
+        <span id="validationMessage" style="color: red;"></span>
+    </form>
+    <div id="validator-output"></div>
+</div>
+<div class="box" id="restpasswordMsg" style="display: none;">
+    <br>
+    <h3 style="color:red">Password reset link is invalid or has expired.</h3>
+    <br>
+    <br>
+    <p> <h4><a asp-controller="login" asp-action="Index"> Click here to Login page</a></h4></p>
+</div>
+
+<script>
+    window.ApiUrl1 = '@Model.ApiUrl1';
+    window.ApiUrl2 = '@Model.ApiUrl2';
+    window.BaseUrl = '@Model.BaseUrl';
+    window.Port1 = '@Model.Port1';
+    window.Port2 = '@Model.Port2';
+    window.Endpoint1 = '@Model.Endpoint1';
+    window.Endpoint2 = '@Model.Endpoint2';
+</script>
+
+<script src="~/js/reset/reset.js"></script>

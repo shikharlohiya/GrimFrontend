@@ -1,0 +1,215 @@
+﻿ 
+ @* table cdn *@
+<link
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+<link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+@* table cdn  end *@
+ <link rel="stylesheet" type="text/css" href="~/css/common.css">
+<style>
+.error-msg {
+  display: none;
+  color: red;
+  font-size: small;
+}
+
+.error {
+ font-size: small;
+}
+
+@* model css *@
+.form-group-m{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+</style>
+<section id="content-wrapper">
+            <div class="page-title">
+                <h1>Manage Vendors</h1>
+            </div>
+            <div class="container-fluid">
+                <div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-12 col-sm-12">
+
+                            <div class="vendors-wrap">
+                                <h3>Add New Vendor</h3>
+                                <form >
+                                    <div>
+                                        <div class="form-group">
+                                            <label for="usr">Vendor Name<span>*</span></label>
+                                            <input type="text" name="name" class="form-control" id="name" required>
+                                            <span class="errmsg error-msg1"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="usr">Contact Name<span>*</span></label>
+                                            <input type="text" name="contactname" class="form-control" id="contactname" required>
+                                            <span class="errmsg error-msg2"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="number">Mobile Number<span>*</span></label>
+                                            <input type="tel" name="phone" id="phone" name="phone" class="form-control" required>
+                                            <span class="errmsg error-msg3"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="comment">Address<span>*</span></label>
+                                            <textarea class="form-control" name="address" rows="3" id="Address" required></textarea>
+                                            <span class="errmsg error-msg4"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="comment">Remark</label>
+                                            <textarea class="form-control" name="remark" rows="3" id="Remark"></textarea>
+                                            <span class="errmsg error-msg5"></span>
+                                        </div>
+                                    </div>
+                                    <div class="vendors-buttons-wrap">
+                                        <button type="reset" class="common-button common-orange-button">RESET</button>
+                                        <button type="button" class="common-button common-blue-button" id ="submit-form">SAVE</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-12 col-sm-12">
+                            <div class="vendors-wrap">
+                                <h3> Vendor List</h3>
+                                <div id="table-scroll" class="table-scroll table-scroll-wrap">
+                                    <table id="main-table" class="main-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Vendor Name</th>
+                                                <th scope="col">Contact Name</th>
+                                                <th scope="col">Mobile No</th>
+                                                <th scope="col">Address</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @* <tr>
+                                                <td>Eretail</td>
+                                                <td>Eretail</td>
+                                                <td>7412589630</td>
+                                                <td>Hyderabad</td>
+                                                <td>29-july-2022</td>
+                                                <td>
+                                                    <div data-toggle="modal" data-target="#customModalCenter"><span
+                                                            class="cust-badge pendiing-badge">Pendiing</span></div>
+                                                </td>
+                                                <th>
+                                                    <div>
+
+
+                                                        <span class="material-symbols-rounded">
+                                                            edit
+                                                        </span>
+
+
+
+                                                        <span class="material-symbols-rounded">
+                                                            delete
+                                                        </span>
+
+
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>Eretail</td>
+                                                <td>Eretail</td>
+                                                <td>7412589630</td>
+                                                <td>Hyderabad</td>
+                                                <td>29-july-2022</td>
+                                                <td>
+                                                    <div data-toggle="modal" data-target="#orderPlacedModal"><span
+                                                            class="cust-badge pendiing-badge ">Pendiing</span></div>
+                                                </td>
+                                                <th>
+                                                    <div>
+
+
+                                                        <span class="material-symbols-rounded">
+                                                            edit
+                                                        </span>
+
+
+
+                                                        <span class="material-symbols-rounded">
+                                                            delete
+                                                        </span>
+
+
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>Eretail</td>
+                                                <td>Eretail</td>
+                                                <td>7412589630</td>
+                                                <td>Hyderabad</td>
+                                                <td>29-july-2022</td>
+                                                <td>
+                                                    <div><span class="cust-badge pendiing-badge ">Pendiing</span></div>
+                                                </td>
+                                                <th>
+                                                    <div>
+
+
+                                                    </div>
+                                                </th>
+                                            </tr> *@
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<script>
+    window.ApiUrl1 = '@Model.ApiUrl1';
+    window.ApiUrl2 = '@Model.ApiUrl2';
+    window.BaseUrl = '@Model.BaseUrl';
+    window.Port1 = '@Model.Port1';
+    window.Port2 = '@Model.Port2';
+    window.Endpoint1 = '@Model.Endpoint1';
+    window.Endpoint2 = '@Model.Endpoint2';
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
+@* cdn for momment ude *@
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+@* cdn for momment ude *@
+
+@*table cdn*@
+<script
+    src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script
+    src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script
+    src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<script
+    src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+
+@* end cdn *@
+
+<script src="~/js/main.js"></script>
+<script src="~/js/vendors/vendors.js"></script>

@@ -1,0 +1,150 @@
+﻿<link rel="stylesheet" type="text/css" href="~/css/Cart.css">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+<section id="content-wrapper">
+
+    <div class="page-title">
+        <div>
+            <h1>Cart</h1>
+        </div>
+        <div>
+            <a href="./NewIndent"><button
+                    class="btn btn-primary common-blue-button common-flex-icon-btn common-blue-button"><span
+                        class="material-symbols-rounded">add</span>ADD ITEM</button></a>
+        </div>
+
+    </div>
+
+    <div class="container-fluid">
+        <div class="filter-wrap">
+            <div class="row">
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <select class="form-control" id="sel1" disabled name="sellist1">
+                            <option value="" id="plant_name"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select class=" selectpicker" data-live-search="true" id="sel2" name="sellist1"></select>
+                        <span class="error-msg" id="cartdropbox1" style="display: none;">*The location field is
+                            required.</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select class=" selectpicker" data-live-search="true" id="sel3" name="sellist1">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <select class="form-control" id="sel4" name="sellist1">
+                            <option value="0">Delivery Type*</option>
+                            <option>Self Pickup</option>
+                            <option>Store</option>
+                        </select>
+                        <span class="error-msg" id="cartdropbox2" style="display: none;">*The DeliveryType field is
+                            required..</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="">
+                        <input type="checkbox" id="urgent-indent" name="Urgent Indent" value="1">
+                        <label for="Urgent Indent">Urgent Indent</label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="tableid">
+            <form id="formId">
+                <div class="product-cart-wrapp table-responsive">
+                    <table class="table table-striped" id="example">
+                        <thead>
+                            <tr>
+                                <th>SI No</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Delivery Date</th>
+                                <th>Delivery Priority</th>
+                                <th>Delivery Days</th>
+                                <th>Tracking Plant</th>
+                                <th>Where in Plant</th>
+                                <th>Reason</th>
+                                <th>Where Used</th>
+                                <th>Quantity Check By</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tbody">
+                        </tbody>
+
+                    </table>
+
+                </div><br>
+                <div class="cart-buttons-wrap">
+                    <button type="submit" class=" btn common-button common-yellow-button" onclick="Pordectorder()">PLACE
+                        INDENT</button>
+                    <button class="btn common-button common-orange-button" onclick="clearcart()">CLEAR</button>
+                    <button class="btn common-button common-blue-button common-flex-icon-btn" onclick="printbtn()"><span
+                            class="material-symbols-rounded">print</span> PREVIEW INDENT</button>
+
+                </div>
+            </form>
+        </div>
+        <br>
+        <div id="showmsg"></div>
+    </div>
+</section>
+<br><br>
+
+<div class="spinnerbody" id="spinnerbody">
+    <div class="spinnerchild">
+        <div class="spinner-border text-success " role="status">
+            <span class="sr-only"></span>
+        </div>
+        <span>Loading....</span>
+    </div>
+</div>
+
+<script>
+    window.ApiUrl1 = '@Model.ApiUrl1';
+    window.ApiUrl2 = '@Model.ApiUrl2';
+    window.BaseUrl = '@Model.BaseUrl';
+    window.Port1 = '@Model.Port1';
+    window.Port2 = '@Model.Port2';
+    window.Endpoint1 = '@Model.Endpoint1';
+    window.Endpoint2 = '@Model.Endpoint2';
+
+    function printbtn() {
+        window.print();
+        return false;
+    }
+</script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+@* <script src="https://code.jquery.com/jquery-3.5.1.js"></script> *@
+@* <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script> *@
+
+@*new cdm for filter*@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+@* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> *@
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
+@*new cdm for filter end*@
+
+<script src="~/js/main.js"></script>
+<script src="~/js/cart/cart.js"></script>
